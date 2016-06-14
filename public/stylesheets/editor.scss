@@ -1,0 +1,22 @@
+#filelist{
+  width: 15vw;
+  height: 100vh;
+  overflow-y: scroll;
+  display: inline-block;
+}
+#code{
+  display: none;
+}
+.CodeMirror{
+  width: 45vw;
+  height: 100vh;
+  margin-left: -1px;
+  display: inline-block;
+}
+
+#preview{
+  width: 37.4vw;
+  height: 100vh;
+  margin-left: -1px;
+  display: inline-block;
+}
