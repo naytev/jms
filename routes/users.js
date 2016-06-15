@@ -10,7 +10,8 @@ var JekyllProxy = require('../jekyll_proxy');
 passport.use(new GitHubStrategy({
     clientID: process.env['GITHUB_CLIENT_ID'],
     clientSecret: process.env['GITHUB_CLIENT_SECRET'],
-    callbackURL: process.env['GITHUB_OAUTH_REDIRECT']
+    callbackURL: process.env['GITHUB_OAUTH_REDIRECT'],
+    scope: ['user:email', 'repo', 'public_repo']
   },
   function(accessToken, refreshToken, profile, cb) {
     cb(null, {

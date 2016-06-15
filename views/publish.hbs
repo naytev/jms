@@ -1,0 +1,12 @@
+<h1>Ready to Publish?</h1>
+<ul>
+  {{#each files}}
+  <li>{{this}}</li>
+  {{else}}
+  <p>No Items to Publish</p>
+  {{/each}}
+<ul>
+<form method='POST'>
+  <textarea></textarea>
+  <input type='submit' value='publish'/>
+</form>
