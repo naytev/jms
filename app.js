@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
 var passport = require('passport');
+var multer = require('multer');
+global.upload = multer({ dest: '/tmp/' })
 
 
 

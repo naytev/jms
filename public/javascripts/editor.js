@@ -10,13 +10,9 @@ fetch('/editor/files', {
 });
 
 CodeMirror.commands.autocomplete = function(cm) {
-    CodeMirror.showHint(cm, CodeMirror.hint.html);
+  CodeMirror.showHint(cm, CodeMirror.hint.html);
 }
-var updateThrottle = _.throttle(function(){
-  console.log("Reloading preview window");
-  preview.contentWindow.location.reload();
-}, 2000);
-
+CodeMirror.commands.save = saveContent;
 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
   mode: "text/x-markdown",
   theme: "monokai",
@@ -24,9 +20,13 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
   lineNumbers: true,
   styleActiveLine: true,
   matchBrackets: true,
-  extraKeys: {"Ctrl-Space": "autocomplete"},
+  extraKeys: {
+    "Ctrl-Space": "autocomplete"
+  },
+
 });
-editor.on('changes', function(){
+
+function saveContent() {
   fetch(window.location.pathname, {
     method: "POST",
     headers: {
@@ -35,9 +35,38 @@ editor.on('changes', function(){
     },
     credentials: 'same-origin',
     body: JSON.stringify({
-      contents: editor.getValue() 
+      contents: editor.getValue()
     })
-  }).then(function(){
-    updateThrottle();
+  }).then(function() {
+    setTimeout(function() {
+      console.log("Reloading preview window");
+      preview.contentWindow.location.reload();
+    }, 1000);
   })
+}
+
+$('.js-template-modal-open').click(function(e){
+  e.preventDefault();
+  var _this = $(this);
+  var templateModal = $("#templateModal")
+  templateModal.find('.modal-title').text(_this.data('modalLabel'));
+  templateModal.find('input[name="template"]').val(_this.data('template'));
+  templateModal.modal('show');
+});
+$('.js-file-upload-modal-open').click(function(e){
+  e.preventDefault();
+  var _this = $(this);
+  var templateModal = $("#fileModal")
+  templateModal.find('.modal-title').text(_this.data('modalLabel'));
+  templateModal.modal('show');
+});
+
+$('#fileSubmit').click(function(e){
+  e.preventDefault();
+  $("#fileModal form").submit();
+})
+
+$('#templateSubmit').click(function(e){
+  e.preventDefault();
+  $("#templateModal form").submit();
 })

@@ -23,7 +23,7 @@ function startServer(jekyllSite) {
       cwd: jekyllSite.path
     }, function(err) {
       fs.removeSync(jekyllSite.path + "/_site");
-      var params = ['exec', 'jekyll', 'server', '--port' , port, '--config', '_config.yml,_config_jms.yml', '--drafts', '--future'];
+      var params = ['exec', 'jekyll', 'server', '--port' , port, '--config', '_config.yml,_config_jms.yml', '--drafts', '--future', '--incremental'];
       console.log('Starting the bundle command', params);
       var child = spawn('bundle', params, {
         cwd: jekyllSite.path,

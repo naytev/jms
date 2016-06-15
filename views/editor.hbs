@@ -35,6 +35,18 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Editor</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">New Content<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {{#each templates}}
+                  <li><a href="#" class='js-template-modal-open' data-modal-label='{{this.modalLabel}}' data-template='{{this.path}}'>{{this.name}}</a></li>
+                {{/each}}
+                <li role="separator" class="divider"></li>
+                <li><a href="#" class='js-file-upload-modal-open' data-modal-label='Upload Image'>Image</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#"class='js-file-upload-modal-open' data-modal-label='Upload File'>File</a></li>
+              </ul>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href='/publish/save'>Publish</a></li>
@@ -48,9 +60,58 @@
     <textarea id="code">{{content}}</textarea>
     <iframe id="preview" src="/preview{{file}}"></iframe>
   </container>
+  <div id="templateModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <form action='/editor/template' method='POST' class='form-vertical'>
+            <input type="hidden" name='template' />
+            <div class="form-group">
+              <label >File Name</label>
+              <input type="input" class="form-control" name='filename' placeholder="_posts/2016_06_17_mike_is_cool.md"/>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button id="templateSubmit" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <div id="fileModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <form action='/editor/file' method='POST' class='form-vertical' enctype="multipart/form-data">
+           <div class="form-group">
+              <label >File</label>
+              <input type="file" class="form-control" name='file'/>
+            </div>
+            <div class="form-group">
+              <label >File Name</label>
+              <input type="input" class="form-control" name='filename'/>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button id="fileSubmit" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
   <script src="/javascripts/bootstrap.treeview.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
   <script src="/javascripts/editor.js"></script>

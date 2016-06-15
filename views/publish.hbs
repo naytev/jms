@@ -6,7 +6,11 @@
   <p>No Items to Publish</p>
   {{/each}}
 <ul>
+{{#if canPublish}}
 <form method='POST'>
-  <textarea></textarea>
+  <textarea name='info' required></textarea>
   <input type='submit' value='publish'/>
 </form>
+{{else}}
+<p>Please go back and ensure that you made changes</p>
+{{/if}}

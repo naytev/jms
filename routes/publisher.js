@@ -46,14 +46,19 @@ router.get('/preview/:oid', function(req, res) {
       return file.path() + " CHANGED"
     })
     res.render('publish', {
+      canPublish: fileNames.length > 0,
       files: fileNames
     })
+  }).catch(function(e){
+    console.log('error', e)
   })
 });
 
 router.post('/preview/:oid', function(req, res) {
-  var repoRef, commitRef;
-  var github = new GitHubApi();
+  var repoRef, commitRef, branchNameRef;
+  var github = new GitHubApi({
+    debug: true
+  });
   github.authenticate({
     type: "oauth",
     token: req.user.accessToken
@@ -68,20 +73,23 @@ router.post('/preview/:oid', function(req, res) {
     .then(function(parent) {
       console.log('creatingCommit')
       var author = Git.Signature.now(req.user.username, req.user.id);
-      return repoRef.createCommit("HEAD", author, author, "Testing", req.params.oid, [parent]);
+      return repoRef.createCommit("HEAD", author, author, req.body.info, req.params.oid, [parent]);
     })
     .then(function(commitId) {
       commitRef = commitId;
+      return repoRef.getCurrentBranch();
+    }).then(function(branch){
+      branchNameRef = branch.shorthand();
       return repoRef.getRemote("origin");
     }).then(function(remote) {
-      return remote.push([`refs/heads/HEAD:refs/heads/HEAD`], {
+      return remote.push(['HEAD:refs/heads/'+branchNameRef], {
         callbacks: {
           certificateCheck: function() {
             return 1;
           },
           credentials: function() {
             console.log(req.user.accessToken)
-            return NodeGit.Cred.userpassPlaintextNew(req.user.accessToken, "x-oauth-basic");
+            return Git.Cred.userpassPlaintextNew(req.user.accessToken, "x-oauth-basic");
           }
         }
       });
@@ -89,8 +97,8 @@ router.post('/preview/:oid', function(req, res) {
       github.pullRequests.create({
         user: 'naytev',
         repo: 'naytev-blog',
-        title: 'Pull Request',
-        head: req.params.oid,
+        title: req.body.info.substr(0, 100),
+        head: branchNameRef,
         base: 'dev'
       }, function() {
         res.redirect('/editor');
