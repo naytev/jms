@@ -1,19 +1,24 @@
-FROM ubuntu:14.04
+FROM node:6.2-onbuild
 
-RUN apt-get update && apt-get install -y libcurl3
+RUN apt-get update
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 # Install Ruby and Rails dependencies
 RUN apt-get install -y \
   ruby \
   ruby-dev \
+  git \
+  git-core \
   build-essential \
   libxml2-dev \
   libxslt1-dev \
   zlib1g-dev \
-  libsqlite3-dev \
-  nodejs \
-  npm
+  libsqlite3-dev 
+
+RUN gem install bundler
+
+RUN git clone https://github.com/naytev/jms
+
+WORKDIR jms
 
 RUN npm install
 
