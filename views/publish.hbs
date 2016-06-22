@@ -7,9 +7,15 @@
   {{/each}}
 <ul>
 {{#if canPublish}}
-<form method='POST'>
-  <textarea name='info' required></textarea>
-  <input type='submit' value='publish'/>
+  <br>
+  <br>
+  <br>
+
+<form method='POST' >
+  <textarea name='info' required rows='10' cols='80'>
+  This message will help keep track of what you did and will let your teammates know too.</textarea>
+  <br>
+  <input type='submit' value='Publish'/>
 </form>
 {{else}}
 <p>Please go back and ensure that you made changes</p>

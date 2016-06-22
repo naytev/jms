@@ -34,10 +34,13 @@ router.get('/auth/github/callback',
     // Successful authentication, redirect home.
     var rootpath = process.env["BASE_PATH"] + "/" + req.user.username;
     let promise = Promise.resolve();
+    var cloneOptions = new Git.CloneOptions();    
+    cloneOptions.checkoutBranch = 'dev';
+
     if (!fs.existsSync(rootpath)) {
-      promise = Git.Clone(process.env["REPO_URL"], rootpath);
+      promise = Git.Clone(process.env["REPO_URL"], rootpath, cloneOptions)
     }
-    promise.then(function(repo) {
+    promise.then(function(){
       var jekyllSite = JekyllProxy.makeSite(req.user.username, rootpath);
       return JekyllProxy.startServer(jekyllSite);
     }).then(function(runningSite){

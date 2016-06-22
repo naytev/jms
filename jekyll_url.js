@@ -12,6 +12,7 @@ function get(jekyllSite, path) {
       output.push(data.toString('utf8'));
     });
     child.on('close', () => {
+      console.log(output)
       console.log("Jekyll get site " + output[output.length -1]);
       resolve(output[output.length -1]);
     });

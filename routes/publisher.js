@@ -23,8 +23,7 @@ router.get('/refresh', function(req, res){
         }
       });
   }).then(function() {
-    console.log("woot");
-    return repoRef.mergeBranches("master", "origin/master");
+    return repoRef.mergeBranches("dev", "origin/dev");
   }).then(function(){
     res.redirect('/editor');
   }).catch(function(e){
