@@ -8,6 +8,29 @@ router.use(function(req, res, next) {
   req.site = req.session.site;
   next();
 });
+router.get('/refresh', function(req, res){
+  var repoRef;
+  Git.Repository.open(req.site.path).then((repo) => {
+    repoRef = repo;
+    return repoRef.fetchAll({
+        callbacks: {
+          certificateCheck: function() {
+            return 1;
+          },
+          credentials: function() {
+            return Git.Cred.userpassPlaintextNew(req.user.accessToken, "x-oauth-basic");
+          }
+        }
+      });
+  }).then(function() {
+    console.log("woot");
+    return repoRef.mergeBranches("master", "origin/master");
+  }).then(function(){
+    res.redirect('/editor');
+  }).catch(function(e){
+    console.log('Refresh Error', e);
+  })
+})
 router.get('/save', function(req, res) {
   var indexRef, repoRef, branchName;
   Git.Repository.open(req.site.path).then((repo) => {

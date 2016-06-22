@@ -1,7 +1,9 @@
 FROM node:6.2-onbuild
 
-RUN apt-get update
+RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 
+RUN apt-get update
+RUN sudo apt-get install -y libstdc++-4.9-dev
 # Install Ruby and Rails dependencies
 RUN apt-get install -y \
   ruby \
