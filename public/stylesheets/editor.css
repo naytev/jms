@@ -7,11 +7,15 @@
 #code {
   display: none; }
 
-.CodeMirror {
+#code-wrapper {
   width: 45vw;
   height: 100vh;
   margin-left: -1px;
   display: inline-block; }
+
+.CodeMirror {
+  width: 100%;
+  height: calc(100% - 35px); }
 
 #preview {
   width: 37.4vw;

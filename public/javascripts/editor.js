@@ -70,3 +70,20 @@ $('#templateSubmit').click(function(e){
   e.preventDefault();
   $("#templateModal form").submit();
 })
+
+$("#saveButton").click(function(e){
+  e.preventDefault();
+  saveContent();
+})
+
+$('.js-rename-file-open').click(function(e){
+  e.preventDefault();
+  var _this = $(this);
+  var renameModal = $("#renameModal")
+  renameModal.modal('show');
+});
+
+$('#renameSubmit').click(function(e){
+  e.preventDefault();
+  $("#renameModal form").submit();
+})

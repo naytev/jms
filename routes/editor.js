@@ -76,7 +76,17 @@ router.post('/file', upload.single('file'), function(req, res){
   fs.ensureDirSync(dirName);
   fs.renameSync(req.file.path, fullFileName);
   res.redirect('back');
+})
 
+router.post('/name', function(req, res){
+  console.log(req.body)
+  var oldFullFileName =  req.site.path + '/' + req.body.oldName;
+  var fullFileName = req.site.path + '/' + req.body.filename;
+  var dirName = path.dirname(fullFileName);
+
+  fs.ensureDirSync(dirName);
+  fs.renameSync(oldFullFileName, fullFileName);
+  res.redirect('/editor' + req.body.filename);
 })
 router.get('/files', function(req, res) {
   var files = dirTree(req.site, req.site.path, ignoreFiles);
