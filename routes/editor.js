@@ -72,6 +72,8 @@ router.post('/template', function(req, res){
 
 router.post('/file', upload.single('file'), function(req, res){
   var fullFileName = req.site.path + '/' + req.body.filename;
+  var dirName = path.dirname(fullFileName);
+  fs.ensureDirSync(dirName);
   fs.renameSync(req.file.path, fullFileName);
   res.redirect('back');
 
