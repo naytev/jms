@@ -5,7 +5,7 @@ var fs = require('fs-extra-promise');
 var path = require('path');
 var fm = require('front-matter');
 
-const ignoreFiles = ['_site', '.git', '.gitignore', '_config.yml', '_config_prod.yml', '_plugins', 's3_website.yml', 'CNAME', 'Gemfile', 'Gemfile.lock', 'LICENSE', 'README.md', 'Rakefile'];
+const ignoreFiles = ['.asset-cache', '_assets', '_data', '_includes', '_site', '.git', '.gitignore', '_config.yml', '_config_prod.yml', '_plugins', 's3_website.yml', 'CNAME', 'Gemfile', 'Gemfile.lock', 'LICENSE', 'README.md', 'Rakefile'];
 
 function dirTree(jekyllSite, filename, ignore = [], selected = "") {
   var stats = fs.lstatSync(filename),
