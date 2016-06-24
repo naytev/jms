@@ -16,11 +16,22 @@ body {
 #code {
   display: none; }
 
-.CodeMirror {
+#code-wrapper {
+  position: relative;
   width: 45vw;
   height: 100vh;
   margin-left: -1px;
   display: inline-block; }
+
+.CodeMirror {
+  padding-top: 45px;
+  width: 100%;
+  height: calc(100%); }
+
+#code-buttons {
+  position: absolute;
+  right: 0;
+  z-index: 1000; }
 
 #preview {
   width: 37.4vw;

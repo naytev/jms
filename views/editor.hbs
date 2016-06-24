@@ -18,7 +18,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.15.2/theme/monokai.css">
     <link rel='stylesheet' href='/stylesheets/editor.css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/simplex/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Ib5WUYOh/fqe9wT9MDBX+VgUWQuUf8oDH3yuR9Kr+6Y5ejq92KR8LEuCbRiGZpG" crossorigin="anonymous"> -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-mvYjhBJXQ9VlNETV/xXShy849GsBHnKzVVudnMOcWUVM/6Nd2ksj8VNng5f8ylyX" crossorigin="anonymous"> -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/journal/bootstrap.min.css" rel="stylesheet" integrity="sha384-r/qnS4YZBLuBSKeVc+sM4eUYUiJMFhkHfx1nwlErHhTd+NgeJlN/NiiTd6jbKJzm" crossorigin="anonymous">
+
   </head>
   <body>
   <div class='container-fluid'>
@@ -59,7 +62,14 @@
     </nav>
     <div id="filelist">
     </div>
-    <textarea id="code">{{content}}</textarea>
+    <div id="code-wrapper">
+      <div class="btn-group" id='code-buttons' role="group" aria-label="...">
+        <button id="saveButton" type="button" class="btn btn-primary"><i class='fa fa-save'></i> Save</button>
+        <button type="button" class="btn btn-info js-rename-file-open"><i class='fa fa-pencil'></i> Rename</button>
+        <button type="button" class="btn btn-success"><i class='fa fa-undo'></i> Reset</button>
+      </div>
+      <textarea id="code">{{content}}</textarea>
+    </div>
     <iframe id="preview" src="/preview{{file}}"></iframe>
   </container>
   <div id="templateModal" class="modal fade" tabindex="-1" role="dialog">
@@ -107,6 +117,29 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button id="fileSubmit" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <div id="renameModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Rename File</h4>
+        </div>
+        <div class="modal-body">
+          <form action='/editor/name' method='POST' class='form-vertical'>
+            <input type='hidden' name='oldName' value='{{file}}' />
+            <div class="form-group">
+              <label >File Name</label>
+              <input type="input" class="form-control" name='filename' value='{{file}}'/>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button id="renameSubmit" type="button" class="btn btn-primary">Save</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
