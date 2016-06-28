@@ -118,4 +118,10 @@ router.post(':file(*)', function(req, res) {
   });
 });
 
+router.delete(':file(*)', function(req, res){
+  fs.unlinkSync(req.site.path + req.params.file, req.body.contents).then(() => {
+    res.sendStatus(201);
+  });
+})
+
 module.exports = router;

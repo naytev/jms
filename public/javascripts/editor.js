@@ -45,7 +45,7 @@ function saveContent() {
   })
 }
 
-$('.js-template-modal-open').click(function(e){
+$('.js-template-modal-open').click(function(e) {
   e.preventDefault();
   var _this = $(this);
   var templateModal = $("#templateModal")
@@ -53,7 +53,7 @@ $('.js-template-modal-open').click(function(e){
   templateModal.find('input[name="template"]').val(_this.data('template'));
   templateModal.modal('show');
 });
-$('.js-file-upload-modal-open').click(function(e){
+$('.js-file-upload-modal-open').click(function(e) {
   e.preventDefault();
   var _this = $(this);
   var templateModal = $("#fileModal")
@@ -61,37 +61,53 @@ $('.js-file-upload-modal-open').click(function(e){
   templateModal.modal('show');
 });
 
-$('#fileSubmit').click(function(e){
+$('#fileSubmit').click(function(e) {
   e.preventDefault();
   $("#fileModal form").submit();
 })
 
-$('#templateSubmit').click(function(e){
+$('#templateSubmit').click(function(e) {
   e.preventDefault();
   $("#templateModal form").submit();
 })
 
-$("#saveButton").click(function(e){
+$("#saveButton").click(function(e) {
   e.preventDefault();
   saveContent();
 })
 
-$('.js-rename-file-open').click(function(e){
+$('.js-rename-file-open').click(function(e) {
   e.preventDefault();
   var _this = $(this);
   var renameModal = $("#renameModal")
   renameModal.modal('show');
 });
 
-$('#renameSubmit').click(function(e){
+$('#renameSubmit').click(function(e) {
   e.preventDefault();
   $("#renameModal form").submit();
 })
 
-$("#refresh-confirm").click(function(e){
+$("#refresh-confirm").click(function(e) {
   return window.confirm("Do you want to get the latest published updates? None of your data will be lost. This is not reversable.")
 })
 
-$("#resetButton").click(function(e){
+$("#resetButton").click(function(e) {
   return window.confirm("Are you sure you want to reset this file? This will lose any work you have saved!");
+})
+
+$("#deleteButton").click(function(e) {
+  e.preventDefault()
+  if (window.confirm("Are you sure you want to delete this file?")) {
+    fetch(window.location.pathname, {
+      method: "DELETE",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    }).then(function() {
+      window.location.href = '/editor';
+    })
+  }
 })
