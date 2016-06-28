@@ -9,6 +9,15 @@ for (var i = 0; i < 100; i++) {
   portCounter.push(4000 + i);
 }
 
+var cleanExit = function() { 
+  jekyllProcesses.forEach((value, key) => {
+    console.log("Killing jekyll server ", key)
+    value.kill();
+  });
+};
+process.on('SIGINT', cleanExit); // catch ctrl-c
+process.on('SIGTERM', cleanExit); // catch kill
+
 function makeSite(username, path) {
   return {
     id: username,
