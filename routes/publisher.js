@@ -129,4 +129,21 @@ router.post('/preview/:oid', function(req, res) {
       console.log(e);
     });
 });
+
+
+router.get('/reset/:file(*)', function(req, res){
+  Git.Repository.open(req.site.path).then(function(repo){
+    var opts = {
+      checkoutStrategy: Git.Checkout.STRATEGY.FORCE,
+      paths: req.params.file
+    };
+
+    return Git.Checkout.head(repo, opts)
+    
+  }).then(function() {
+    res.redirect('back')
+  }).catch(function(e){
+    console.log(e);
+  })
+});
 module.exports = router;

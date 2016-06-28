@@ -87,3 +87,11 @@ $('#renameSubmit').click(function(e){
   e.preventDefault();
   $("#renameModal form").submit();
 })
+
+$("#refresh-confirm").click(function(e){
+  return window.confirm("Do you want to get the latest published updates? None of your data will be lost. This is not reversable.")
+})
+
+$("#resetButton").click(function(e){
+  return window.confirm("Are you sure you want to reset this file? This will lose any work you have saved!");
+})
